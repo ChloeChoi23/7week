@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>FILM JOURNAL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: url('wallpaper.jpg') center center / cover no-repeat;
+      margin: 0; height: 100vh; overflow: hidden; position: relative;
+      transition: background 0.8s cubic-bezier(0.68,-0.55,0.27,1.55);
+    }
+    .go-btn-area {
+      position: fixed;
+      left: 50%;
+      bottom: 15%;
+      transform: translateX(-50%);
+      z-index: 20;
+      display: flex; justify-content: center; align-items: center;
+      width: 250px;
+      height: 80px;
+    }
+    .go-btn {
+      background: #fff;
+      color: #232324;
+      font-size: 1.7rem;
+      font-family: 'Satisfy', cursive;
+      border: none;
+      border-radius: 999px;
+      padding: 22px 70px;
+      box-shadow: 0 8px 26px #8885;
+      cursor: pointer;
+      text-align: center;
+      letter-spacing: 1.5px;
+      transition: box-shadow .22s, background .18s;
+    }
+    .go-btn:hover {
+      box-shadow: 0 14px 36px #aaa8;
+      background: #f6f6f6;
+      color: #222;
+    }
+    .popup-area {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: 100;
+      display: none;
+      align-items: center; justify-content: center; flex-direction: column;
+      background: transparent;
+    }
+    .popup-area.show {
+      display: flex;
+    }
+    .popup-box {
+      width: 500px; max-width: 95vw;
+      background: #fff;
+      box-shadow: 0 8px 44px #2229;
+      border-radius: 28px;
+      padding: 54px 40px 36px 40px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    .search-form {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+    }
+    .search-input-area {
+      display: flex;
+      flex-direction: column;
+      width: 340px;
+      max-width: 65vw;
+    }
+    .search-input {
+      width: 100%;
+      font-size: 1.7rem;
+      font-family: 'Satisfy', cursive;
+      color: #232324;
+      background: transparent;
+      border: none;
+      outline: none;
+      text-align: center;
+      box-shadow: none;
+      margin: 0;
+      padding: 16px 10px 6px 10px;
+      transition: color .25s;
+      caret-color: #ffe46b;
+    }
+    .underline {
+      width: 100%;
+      border-bottom: 2.6px solid #eee7cc;
+      margin-top: 0;
+      margin-bottom: 0;
+      height: 0.5em;
+    }
+    .search-btn {
+      background: #111;
+      color: #fff;
+      font-size: 1.18rem;
+      border: none;
+      font-family: 'Satisfy', cursive;
+      cursor: pointer;
+      padding: 17px 36px;
+      border-radius: 999px;
+      text-align: center;
+      margin-left: 8px;
+      transition: background .12s, color .18s;
+      box-shadow: 0 2px 14px #2222;
+      outline: none;
+      height: 54px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .search-btn:hover { background: #313131; color: #ffe46b; }
+    @media (max-width: 520px) {
+      .popup-box { width: 98vw; padding: 32px 3vw; }
+      .search-form { flex-direction: column; gap: 13px; }
+      .search-input-area { width: 95vw; }
+    }
+    .hide-all {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .7s;
+    }
+  </style>
+</head>
+<body>
+  <div class="go-btn-area" id="goBtnArea">
+    <button class="go-btn" id="goBtn">Go</button>
+  </div>
+  <div class="popup-area" id="popupArea">
+    <div class="popup-box">
+      <form class="search-form" onsubmit="event.preventDefault();">
+        <div class="search-input-area">
+          <input
+            type="text"
+            class="search-input"
+            id="movieInput"
+            placeholder="search movie in english"
+            autocomplete="off"
+          >
+          <div class="underline"></div>
+        </div>
+        <button class="search-btn" type="submit" id="searchBtn">검색</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    const goBtn = document.getElementById('goBtn');
+    const popupArea = document.getElementById('popupArea');
+    const goBtnArea = document.getElementById('goBtnArea');
+    const searchBtn = document.getElementById('searchBtn');
+    function transitionToImage() {
+      popupArea.classList.add('hide-all');
+      goBtnArea.classList.add('hide-all');
+      document.body.style.background = "url('film journal main2.jpg') center center / cover no-repeat";
+    }
+    goBtn.addEventListener('click', () => {
+      popupArea.classList.add('show');
+      goBtnArea.style.display = 'none';
+      document.getElementById('movieInput').focus();
+    });
+    popupArea.addEventListener('mousedown', e => {
+      if (e.target === popupArea) {
+        popupArea.classList.remove('show');
+        goBtnArea.style.display = 'flex';
+      }
+    });
+    document.querySelector('.search-form').addEventListener('submit', function() {
+      const value = movieInput.value.trim();
+      if (value.match(/^[a-zA-Z0-9\s]+$/)) {
+        transitionToImage();
+      }
+    });
+    searchBtn.addEventListener('click', function(){
+      const value = movieInput.value.trim();
+      if (value.match(/^[a-zA-Z0-9\s]+$/)) {
+        transitionToImage();
+      }
+    });
+  </script>
+<div id="drop-area"
+     style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:10;">
+</div>
+<script>
+const dropArea = document.getElementById('drop-area');
+["dragenter", "dragover", "dragleave", "drop"].forEach(eventName => {
+  dropArea.addEventListener(eventName, function(e){
+    e.preventDefault();
+    e.stopPropagation();
+  }, false);
+});
+dropArea.addEventListener('drop', function(e){
+  const files = e.dataTransfer.files;
+  for(let i=0; i<files.length; i++){
+    if(files[i].type.startsWith('image/')){
+      const reader = new FileReader();
+      reader.onload = function(ev){
+        addImage(ev.target.result);
+      }
+      reader.readAsDataURL(files[i]);
+    }
+  }
+});
+function addImage(src){
+  const img = document.createElement('img');
+  img.src = src;
+  img.style.position = 'absolute';
+  img.style.width = '160px';
+  img.style.left = (Math.random()*70+15) + 'vw';
+  img.style.top = (Math.random()*60+20) + 'vh';
+  img.style.boxShadow = '0 4px 18px #3333';
+  img.style.borderRadius = '11px';
+  img.style.zIndex = 999;
+  dropArea.appendChild(img);
+}
+</script>
+</body>
+</html>
